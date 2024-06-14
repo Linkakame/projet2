@@ -7,16 +7,28 @@
 </head>
 <body>
     <form method="post">
-        <button type="submit" name="conducteur">Conducteur</button>
-        <button type="submit" name="passager">Passager</button>
-        <input type="hidden" name="submit" value="1">
+        <button type="submit" name="role" value="conducteur">Conducteur</button>
+        <button type="submit" name="role" value="passager">Passager</button>
     </form>
 </body>
 <?php
     session_start();
     require('../../connexion_bdd/connexion.php');
 
-if(isset($_POST['conducteur'])) {
+    if (isset($_POST['role'])) {
+        $role = $_POST['role'];
+    
+        if ($role === 'conducteur') {
+            $_SESSION['conducteur'] = 1;
+            $_SESSION['passager'] = 0;
+            handleConducteur();
+        } elseif ($role === 'passager') {
+            $_SESSION['conducteur'] = 0;
+            $_SESSION['passager'] = 1;
+            handlePassager();
+        }
+    }
+if(isset($_POST['conducteur'])) {;
     handleConducteur();
 } elseif(isset($_POST['passager'])) {
     handlePassager();

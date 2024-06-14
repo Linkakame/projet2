@@ -65,16 +65,19 @@ $stmt->execute();
                     $villearrive = $_POST['villearrive'];
                     $datetrajet = $_POST['datetrajet'];
                     $heuredepart = $_POST['heuredepart'];
-                
+                    
+                    $conducteur = $_SESSION['conducteur'];
+                    $passager = $_SESSION['passager'];
                     // Insérer le trajet dans la base de données
-                    $sql2 = "INSERT INTO trajet (villedepart, villearrive, datetrajet, heuredepart, utilisateur_id) VALUES (:villedepart, :villearrive, :datetrajet, :heuredepart, :utilisateur_id)";
+                    $sql2 = "INSERT INTO trajet (villedepart, villearrive, datetrajet, heuredepart, utilisateur_id, conducteur, passager) VALUES (:villedepart, :villearrive, :datetrajet, :heuredepart, :utilisateur_id, :conducteur, :passager)";
                     $stmt = $DB->prepare($sql2);
                     $stmt->bindParam(':villedepart', $villedepart);
                     $stmt->bindParam(':villearrive', $villearrive);
                     $stmt->bindParam(':datetrajet', $datetrajet);
                     $stmt->bindParam(':heuredepart', $heuredepart);
                     $stmt->bindParam(':utilisateur_id', $utilisateur_id);
-                    
+                    $stmt->bindParam(':conducteur', $conducteur);
+                    $stmt->bindParam(':passager', $passager);
                     if($stmt->execute()) {
                         header("Location: passager.php");
                     } else {
