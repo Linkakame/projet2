@@ -93,10 +93,10 @@ $stmt->execute();
         if(isset($_POST['search'])) {
             echo "<h2>Résultats de la recherche :</h2>";
             echo "<ul>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<li>Trajet ID: " . $row["idtrajet"] . " - Ville de départ: " . $row["villedepart"] . " - Ville d'arrivée: " . $row["villearrive"] . "</li>";
-            }
-            echo "</ul>";
+             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "</li>";
+        }
+        echo "</ul>";
         }
     ?>
     <?php
@@ -107,10 +107,53 @@ $stmt->execute();
         echo "<h2>Liste des trajets :</h2>";
         echo "<ul>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<li>Trajet ID: " . $row["idtrajet"] . " - Ville de départ: " . $row["villedepart"] . " - Ville d'arrivée: " . $row["villearrive"] . "</li>";
+            echo "<li>Trajet ID: " . $row["idtrajet"] . " - Ville de départ: " . $row["villedepart"] . " - Ville d'arrivée: " . $row["villearrive"] . " - Nombre de places: " . $row["nombre_places"];
+        
+            // Votre code pour le conducteur et les passagers ici...
+        
+            echo "<div style='display: flex; align-items: center; gap: 2px;'>";
+        
+            if ($row["conducteur"] == 1) {
+                echo "<strong>Conducteur: Oui</strong>";
+            } else {
+                echo "<form method='post' action='ajouter_conducteur.php' style='margin: 0;'>";
+                echo "<input type='hidden' name='trajet_id' value='" . $row["idtrajet"] . "'>";
+                echo "<button type='submit' name='ajouter_conducteur'>Ajouter Conducteur</button>";
+                echo "</form>";
+            }
+        
+            echo "<form method='post' action='ajouter_passager.php' style='margin: 0;'>";
+            echo "<input type='hidden' name='trajet_id' value='" . $row["idtrajet"] . "'>";
+            echo "<button type='submit' name='ajouter_passager'>Ajouter Passager</button>";
+            echo "</form>";
+        
+            echo "</div>";
+        
+            // Afficher les conducteurs de ce trajet
+            $sql2 = "SELECT u.prenom, u.nom FROM utilisateur u JOIN trajet ON u.id = trajet.utilisateur_id WHERE trajet.idtrajet = :trajet_id AND trajet.conducteur = 1";
+            $stmt2 = $DB->prepare($sql2);
+            $stmt2->bindParam(':trajet_id', $row["idtrajet"], PDO::PARAM_INT);
+            $stmt2->execute();
+        
+            echo "<ul>";
+            while ($conducteur = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                echo "<li>Conducteur: " . $conducteur["prenom"] . " " . $conducteur["nom"] . "</li>";
+            }
+            echo "</ul>";
+        
+            // Afficher les passagers de ce trajet
+            $sql3 = "SELECT u.prenom, u.nom FROM utilisateur u JOIN trajet_passager tp ON u.id = tp.utilisateur_id WHERE tp.trajet_id = :trajet_id";
+            $stmt3 = $DB->prepare($sql3);
+            $stmt3->bindParam(':trajet_id', $row["idtrajet"], PDO::PARAM_INT);
+            $stmt3->execute();
+        
+            echo "<ul>";
+            while ($passager = $stmt3->fetch(PDO::FETCH_ASSOC)) {
+                echo "<li>Passager: " . $passager["prenom"] . " " . $passager["nom"] . "</li>";
+            }
+            echo "</ul>";
         }
-        echo "</ul>";
-    ?>
+        ?>
     <div id="contenue_map">
             <input id="search-input" placeholder="Rechercher une ville">
             <div id="map"></div>
@@ -151,5 +194,6 @@ if(isset($_SESSION['id'])) {
     <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
     <script src="js/passager.js"></script>
     <script src="js/map.js"></script>
+    
 </body>
 </html>

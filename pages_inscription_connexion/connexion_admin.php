@@ -22,7 +22,9 @@
     session_start();
     require('../connexion_bdd/connexion.php');
     if(isset($_POST['connexion'])){
-       
+        $login = htmlentities($_POST['login']);
+        $password = htmlentities($_POST['password']);
+        
     }
     ?>
 </body>

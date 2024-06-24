@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>choix</title>
+    <title>Choix du rôle</title>
+    <link rel="stylesheet" href="css/choix.css">
 </head>
 <body>
-    <form method="post">
-        <button type="submit" name="role" value="conducteur">Conducteur</button>
-        <button type="submit" name="role" value="passager">Passager</button>
-    </form>
+    <div class="container">
+        <h1>Choisissez votre rôle</h1>
+        <form method="post" class="role-form">
+            <button type="submit" name="role" value="conducteur" class="role-button conducteur">
+                <span>Conducteur</span>
+            </button>
+            <button type="submit" name="role" value="passager" class="role-button passager">
+                <span>Passager</span>
+            </button>
+        </form>
+    </div>
 </body>
+</html>
 <?php
     session_start();
     require('../../connexion_bdd/connexion.php');

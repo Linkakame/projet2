@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>conducteur</title>
+    <title>Conducteur</title>
+    <link rel="stylesheet" href="css/choix_conducteur.css">
 </head>
 <body>
-    <form method="post">
-        <button type ="submit" name ="possedez">vous possedez une voiture</button>
-        <button type ="submit" name ="garage">vous voulez louer une voiture</button>
-    </form>
-    <?php
+    <div class="container">
+        <h1>Choisissez votre option</h1>
+        <form method="post" class="conducteur-form">
+            <button type="submit" name="possedez" class="option-button possedez">
+                <span>Vous possédez une voiture</span>
+            </button>
+            <button type="submit" name="garage" class="option-button garage">
+                <span>Vous voulez louer une voiture</span>
+            </button>
+        </form>
+    </div>
+</body>
+</html>
+<?php
    session_start();
    require('../../connexion_bdd/connexion.php');
    
@@ -65,6 +75,4 @@
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ? true : false;
     }
-    ?>
-</body>
-</html>
+?>

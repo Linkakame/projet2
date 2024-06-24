@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.conducteur-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.option-button:hover {
+    background-color: #2980b9;
+}
+
+.option-button:focus {
+    outline: none;
+}
+
+.option-button span {
+    display: block;
+}
+
+.option-button.possedez {
+    background-color: #27ae60;
+}
+
+.option-button.garage {
+    background-color: #e74c3c;
+}
